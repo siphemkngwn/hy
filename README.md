@@ -24,7 +24,7 @@ Develop an open-source algorithm to predict in-hospital mortality among children
 
 #### Dataset
 
-- **Provided Dataset**: Synthetic data derived from real hospital data from Uganda.
+- **Provided Dataset**: Synthetic data derived from real hospital data from Uganda, use file SyntheticData_Training.csv as training data, and SyntheticData_DataDictionary_V1.docx as data dictionary.
 - **Feature Constraints**: Your algorithm should exclusively use the provided dataset variables for predictions.
 
 #### Submission Requirements
