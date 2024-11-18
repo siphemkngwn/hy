@@ -1,10 +1,10 @@
-# Python example code for The 2023 Pediatric Sepsis Challenge
+# Python example code for The 2024 Pediatric Sepsis Challenge
 
 ## What's in this repository?
 
-This repository contains a simple example to illustrate how to format a Python entry for The 2023 Pediatric Sepsis Challenge. You can try it by running the following commands on the Challenge training sets. These commands should take a few minutes or less to run from start to finish on a recent personal computer.
+This repository contains a simple example to illustrate how to format a Python entry for The 2024 Pediatric Sepsis Challenge. You can try it by running the following commands on the Challenge training sets. These commands should take a few minutes or less to run from start to finish on a recent personal computer.
 
-For this example, we implemented a random forest model with several features. You can use different models, features, and libraries for your entry. This simpple example is designed **not** not to perform well, so you should **not** use it as a baseline for your model's performance.
+For this example, we implemented a random forest model with several features. You can use different models, features, and libraries for your entry. This simple example is designed **not** to perform well, so you should **not** use it as a baseline for your model's performance.
 
 This code uses four main scripts, described below, to train and run a model for the Challenge.
 
@@ -14,7 +14,7 @@ You can install the dependencies for these scripts by running
 
     pip install -r requirements.txt
 
-You can train you model by running
+You can train your model by running
 
     python train_model.py training_data model
 
@@ -23,7 +23,7 @@ where
 - `training_data` (input; required) is a folder with the training data files and
 - `model` (output; required) is a folder for saving your model.
 
-You can run you trained model by running
+You can run your trained model by running
 
     python run_model.py model test_data test_outputs
 
@@ -33,17 +33,17 @@ where
 - `test_data` (input; required) is a folder with the validation or test data files (you can use the training data for debugging and cross-validation), and
 - `test_outputs` (output; required) is a folder for saving your model outputs.
 
-The [Challenge website](https://physionetchallenges.org/20xx/#data) provides a training database with a description of the contents and structure of the data files.
+The [Challenge website](https://sepsis.ubc.ca/research/current-research-projects/pediatric-sepsis-data-challenge) provides a training database with a description of the contents and structure of the data files.
 
-You can evaluate your model by pulling or downloading the [evaluation code](https://github.com/physionetchallenges/evaluation-20xx) and running
+You can evaluate your model by pulling or downloading the [evaluation code](https://github.com/physionetchallenges/evaluation-2023) and running
 
     python evaluate_model.py labels outputs scores.csv
 
-where `labels` is a folder with labels for the data, such as the training database on the PhysioNet webpage; `outputs` is a folder containing files with your model's outputs for the data; and `scores.csv` (optional) is a collection of scores for your model.
+where `labels` is a folder with labels for the data, such as the training database on the webpage; `outputs` is a folder containing files with your model's outputs for the data; and `scores.csv` (optional) is a collection of scores for your model.
 
 ## Which scripts I can edit?
 
-We will run the `train_model.py` and `run_model.py` scripts to train and run your model, so please check these scripts and the functions that they call.
+We will run the `train_model.py` and `run_model.py` scripts to train and run your model, so please check these scripts and the functions they call.
 
 Please edit the following script to add your training and testing code:
 
@@ -73,11 +73,9 @@ If you have trouble running your code, then please try the follow steps to run t
         user@computer:~$ cd example
         user@computer:~/example$ mkdir training_data test_data model test_outputs
 
-2. Download the training data from the [Challenge website](https://physionetchallenges.org/20xx). Put some of the training data in `training_data` and `test_data`. You can use some of the training data to check your code (and should perform cross-validation on the training data to evaluate your algorithm).
+2. Download the training data. Put some of the training data in `training_data` and `test_data`. You can use some of the training data to check your code (and should perform cross-validation on the training data to evaluate your algorithm).
 
 3. Download or clone this repository in your terminal.
-
-        user@computer:~/example$ git clone https://github.com/physionetchallenges/python-example-20xx.git
 
 4. Build a Docker image and run the example code in your terminal.
 
@@ -112,13 +110,5 @@ If you have trouble running your code, then please try the follow steps to run t
 
 ## How do I learn more?
 
-Please see the [Challenge website](https://physionetchallenges.org/20xx/) for more details. Please post questions and concerns on the [Challenge discussion forum](https://groups.google.com/forum/#!forum/physionet-challenges).
-
-## Useful links
-
-* [Challenge website](https://physionetchallenges.org/20xx/)
-* [MATLAB example code](https://github.com/physionetchallenges/matlab-example-2023)
-* [Scoring code](https://github.com/physionetchallenges/evaluation-2023)
-* [Frequently asked questions (FAQ) for this year's Challenge](https://physionetchallenges.org/20xx/faq/)
-* [Frequently asked questions (FAQ) about the Challenges in general](https://physionetchallenges.org/faq/)
+Please see the [Challenge website](https://sepsis.ubc.ca/research/current-research-projects/pediatric-sepsis-data-challenge) for more details. Please post questions and concerns on the [Challenge discussion forum](https://groups.google.com/g/2024-pediatric-sepsis-data-challenge).
 
