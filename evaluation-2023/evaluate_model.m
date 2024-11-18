@@ -1,4 +1,4 @@
-% This file contains functions for evaluating models for the 2023 Challenge. You can run it as follows:
+% This file contains functions for evaluating models for the 2024 Challenge. You can run it as follows:
 %
 %   evaluate_model(labels, outputs, results)
 %
