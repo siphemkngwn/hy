@@ -32,7 +32,7 @@ Develop an open-source algorithm to predict in-hospital mortality among children
 - **Code and Model**: Submit both:
   - **Training Code**: All scripts and code required for training the model.
   - **Trained Model**: The model file generated from your code.
-- **Language**: Submissions must be in Python; however, R, and MATLAB submissions are also accepted. Python is recommended to facilitate baseline comparisons.
+- **Language**: Submissions must be in Python; however, R submissions are also accepted. Python is recommended to facilitate baseline comparisons. We are no longer accepting the Matlab submissions.
 
 #### Code Validity
 
