@@ -122,7 +122,7 @@ The challenge favors models that:
 - Ensure all components of your submission run autonomously from start to finish in a **cloud-based container**.
 
 #### Leaderboard
-- Scores will be updated on the leaderboard based on the **best score achieved**.
+- Scores will be updated on the leaderboard based on the **best score achieved** on the held-out test set at our end.
 
 #### Open-Source Compliance
 - Ensure that your final submission is properly documented and made available publicly.
