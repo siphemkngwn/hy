@@ -34,8 +34,8 @@ Develop an open-source algorithm to predict in-hospital mortality among children
 <<<<<<< HEAD
 - **Language**: Submissions must be in Python; however, R, and MATLAB submissions are no longer acceptable. Python is recommended to facilitate baseline comparisons.
 =======
-- **Language**: Submissions must be in Python; however, R submissions are also accepted. Python is recommended to facilitate baseline comparisons. We are no longer accepting the Matlab submissions.
->>>>>>> 70c1073fff5cb410fab895f562d0334d968c9cef
+- **Language**: Submissions must be in Python; R submissions are also no longer accepted. Python is recommended to facilitate baseline comparisons. We are no longer accepting the Matlab submissions as well.
+
 
 #### Code Validity
 
@@ -132,7 +132,7 @@ Balances true positives and false positives to measure decision-making utility.
 4. **Estimated Calibration Error (ECE):** 
 Assesses how well predicted probabilities align with actual outcomes.
 
-To get your leaderboard score on test data use evaluate_2024.py file after reading the respective README.md from evaliation-2024 folder of this repository. 
+To get your leaderboard score on test data use [evaluate_2024.py](evaluation-2024/evaluation_2024.py) file after reading the respective [README.md](evaluation-2024/README.md) from evaluation-2024 folder of this repository. 
 
 ---
 
