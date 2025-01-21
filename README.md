@@ -31,8 +31,9 @@ Develop an open-source algorithm to predict in-hospital mortality among children
 - **Code and Model**: Submit both:
   - **Training Code**: All scripts and code required for training the model.
   - **Trained Model**: The model file generated from your code.
-<<<<<<< HEAD
-- **Language**: Submissions must be in Python; however, R, and MATLAB submissions are no longer acceptable. Python is recommended to facilitate baseline comparisons.
+  - **Language**: Submissions must be in Python; however, R, and MATLAB submissions are no longer acceptable. Python is recommended to facilitate baseline comparisons.
+
+
 
 #### Code Validity
 
@@ -129,7 +130,7 @@ Balances true positives and false positives to measure decision-making utility.
 4. **Estimated Calibration Error (ECE):** 
 Assesses how well predicted probabilities align with actual outcomes.
 
-To get your leaderboard score on test data use evaluate_2024.py file after reading the respective README.md from evaliation-2024 folder of this repository. 
+To get your leaderboard score on test data use [evaluate_2024.py](evaluation-2024) file after reading the respective [README.md](evaluation-2024) from evaluation-2024 folder of this repository. 
 
 ---
 
