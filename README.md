@@ -13,14 +13,13 @@ Develop an open-source algorithm to predict in-hospital mortality among children
 <!-- Table of contents for easy navigation in a Markdown file -->
 1. [Data and Code Requirements](#1-data-and-code-requirements)
 2. [Submission Guidelines and Limits](#2-submission-guidelines-and-limits)
-3. [Submission Components](#3-submission-components)
+3. [Submission Instructions for Your Code](#3-Submission-Instructions-for-Your-Code)
 4. [Testing and Evaluation Criteria](#4-testing-and-evaluation-criteria)
-5. [Model Preferences](#5-model-preferences)
-6. [Final Instructions](#6-final-instructions)
+5. [Final Instructions](#5-final-instructions)
 
 ---
 
-### 1. Data and Code Requirements
+## 1. Data and Code Requirements
 
 #### Dataset
 
@@ -32,7 +31,7 @@ Develop an open-source algorithm to predict in-hospital mortality among children
 - **Code and Model**: Submit both:
   - **Training Code**: All scripts and code required for training the model.
   - **Trained Model**: The model file generated from your code.
-- **Language**: Submissions must be in Python; however, R, Julia, and MATLAB submissions are also accepted. Python is recommended to facilitate baseline comparisons.
+- **Language**: Submissions must be in Python; however, R, and MATLAB submissions are no longer acceptable. Python is recommended to facilitate baseline comparisons.
 
 #### Code Validity
 
@@ -40,11 +39,10 @@ Develop an open-source algorithm to predict in-hospital mortality among children
 - **Execution Time**: Maximum 24 hours for training, with 8 hours allocated for validation and testing.
 - **Autonomous Execution**: Ensure your code can execute end-to-end without manual intervention.
   - **Dependencies**: List all dependencies in `requirements.txt` or a compatible environment configuration file.
-  - **Preprocessing**: Include any data preprocessing or transformations directly within the submitted code.
 
 ---
 
-### 2. Submission Guidelines and Limits
+## 2. Submission Guidelines and Limits
 
 #### Submission Limit
 
@@ -71,25 +69,50 @@ Upon completion, all final solutions must be shared publicly (e.g., GitHub) to p
 
 ---
 
-### 3. Submission Components
+## 3. Submission Instructions for Your Code
 
-Each submission should include:
+### Overview
+Use the provided [Python example code](python-example-2023) as a starting point. Clone or download this repository, replace the example code with your implementation, and push or upload the updated files to your repository. Share your repository with the aditya1000 user. Submit your entry using a form, which will be available soon. 
 
-#### Source Code
-- Scripts for **Data Preprocessing**, **Model Training**, and **Prediction on Test Data**.
+### File Descriptions and Guidelines
 
-#### Documentation
-- A comprehensive README file detailing:
-  - **How to run the code**.
-  - Any specific assumptions or variable handling.
-  - Unique features of your model or algorithm.
+#### 1. **Dockerfile**
+- Update the `Dockerfile` to specify the version of Python you are using locally.
+- Add any additional packages required for your code.
+- **Important**: Do not rename or relocate the `Dockerfile`. Its structure must remain intact, especially the three lines marked as "DO NOT EDIT." These lines are critical for our submission system.
 
-#### Environment Setup
-- **requirements.txt** for listing dependencies.
-- (Optional) **Dockerfile** for any special environment configurations.
+#### 2. **requirements.txt**
+- Add all Python packages required by your code.
+- Specify the exact versions of these packages to match your local environment.
+- Remove any unnecessary packages that your code does not depend on.
 
-#### Model File
-- Trained model saved in a standard format (e.g., `.pkl` for scikit-learn or `.h5` for TensorFlow/Keras).
+#### 3. **Documentation Files**
+- Update the following files as needed:
+  - `AUTHORS.txt`: Include the names of all contributors.
+  - `LICENSE.txt`: Specify your license terms.
+  - `README.md`: Provide relevant information about your code.  
+- **Note**: Our submission system does not use the README file to determine how to execute your code.
+
+#### 4. **Code Scripts**
+- **`team_code.py`**: Modify this script to load and run your trained model(s).
+- **`train_model.py`**: Do not modify this script. It calls functions in `team_code.py` to train your model using the training data.
+- **`helper_code.py`**: Do not modify this script. It provides helper functions for your code. Feel free to use these functions, but note that any changes made to this file will not be included when we run your code.
+- **`run_model.py`**: Do not modify this script. It calls functions in `team_code.py` to load and run your trained models on the test data. Any changes to this file will not be reflected in our execution environment.
+
+#### 5. **Docker Development**
+- You can develop and test your code without using Docker. However, before submission, ensure that you can:
+  - Build a Docker image from your `Dockerfile`.
+  - Successfully run your code within a Docker container.
+
+### Submission Instructions
+1. Push or upload your updated code to the root directory of the `master` branch in your repository.
+2. Ensure the repository contains all necessary files and updates as described above.
+
+### Execution on Our System
+Once submitted, we will:
+1. Download your repository.
+2. Build a Docker image using your `Dockerfile`.
+3. Execute your code in our local or cloud environment.
 
 ---
 
@@ -98,25 +121,22 @@ Each submission should include:
 <!-- Details on how submissions will be evaluated based on several key metrics -->
 Your model will be evaluated on the following metrics:
 
-1. **True Positive Rate (TPR) at False Positive Rate (FPR) ≤ 0.20**: Prioritizes high detection rates for critical cases while minimizing false positives.
-2. **Positive Predictive Value (PPV)**: Ensures predictions are accurate to limit unnecessary interventions in resource-limited settings.
-3. **Area Under the ROC Curve (AUC-ROC)**: A secondary metric to measure general performance across thresholds.
-4. **Balanced Accuracy**: Averages recall for both classes, addressing class imbalance.
-5. **F1-Score**: Balances precision and recall, providing a stable metric under class imbalance conditions.
+1. **Area Under the ROC Curve (AUC-ROC)**: A secondary metric to measure general performance across thresholds.
+2. **AUPRC:** Focuses on precision and recall, especially useful for imbalanced datasets.
+3. **Net Benefit:** 
+Balances true positives and false positives to measure decision-making utility.
+4. **Estimated Calibration Error (ECE):** 
+Assesses how well predicted probabilities align with actual outcomes.
+
+To get your leaderboard score on test data use evaluate_2024.py file after reading the respective README.md from evaliation-2024 folder of this repository. 
 
 ---
 
-### 5. Model Preferences
 
-<!-- Guidance on preferred model characteristics given the constraints and goals of the challenge -->
-The challenge favors models that:
-
-- **Optimize Predictive Power**: High predictive accuracy with minimal variable dependency.
-- **Consider Resource Constraints**: Prefer parsimonious models suited for environments with limited computational and clinical resources.
 
 ---
 
-### 6. Final Instructions
+### 5. Final Instructions
 
 #### Autonomous Execution
 - Ensure all components of your submission run autonomously from start to finish in a **cloud-based container**.
@@ -125,7 +145,7 @@ The challenge favors models that:
 - Scores will be updated on the leaderboard based on the **best score achieved**.
 
 #### Open-Source Compliance
-- Ensure that your final submission is properly documented and made available publicly.
+- Ensure that your final submission is properly documented and made available publicly after the completion of the competition.
 
 ---
 
