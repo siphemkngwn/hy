@@ -35,9 +35,9 @@ where
 
 The [Challenge website](https://sepsis.ubc.ca/research/current-research-projects/pediatric-sepsis-data-challenge) provides a training database with a description of the contents and structure of the data files.
 
-You can evaluate your model by pulling or downloading the [evaluation code](https://github.com/physionetchallenges/evaluation-2023) and running
+You can evaluate your model by pulling or downloading the [evaluation code](evaluation-2024) and running
 
-    python evaluate_model.py labels outputs scores.csv
+    python evaluate_2024.py labels outputs scores.csv
 
 where `labels` is a folder with labels for the data, such as the training database on the webpage; `outputs` is a folder containing files with your model's outputs for the data; and `scores.csv` (optional) is a collection of scores for your model.
 
@@ -94,7 +94,7 @@ If you have trouble running your code, then please try the follow steps to run t
 # Should be editted
         root@[...]:/challenge# ls
             Dockerfile             README.md         test_outputs
-            evaluate_model.py      requirements.txt  training_data
+            evaluate_2024.py      requirements.txt  training_data
             helper_code.py         team_code.py      train_model.py
             LICENSE                run_model.py
 
@@ -102,7 +102,7 @@ If you have trouble running your code, then please try the follow steps to run t
 
         root@[...]:/challenge# python run_model.py model test_data test_outputs
 
-        root@[...]:/challenge# python evaluate_model.py test_data test_outputs
+        root@[...]:/challenge# python evaluate_2024.py test_data test_outputs
         [...]
 
         root@[...]:/challenge# exit
