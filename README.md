@@ -74,7 +74,7 @@ Upon completion, all final solutions must be shared publicly (e.g., GitHub) to p
 ## 3. Submission Instructions for Your Code
 
 ### Overview
-Use the provided [Python example code](python-example-2023) as a starting point. Clone or download this repository, replace the example code with your implementation, and push or upload the updated files to your repository. Share your repository with the aditya1000 user. Submit your entry using a form, which will be available soon. 
+Use the provided [Python example code](python-example-2023) as a starting point. Clone or download this repository, replace the example code with your implementation, and push or upload the updated files to your repository. Share your repository with the aditya1000 user. Submit your entry using this [submission form](https://docs.google.com/forms/d/e/1FAIpQLSdLvCU4BG4ttA8Gkek8XK0QhsQpbiTUnBZ7__fVCCQcvIEnIQ/viewform?pli=1). 
 
 ### File Descriptions and Guidelines
 
