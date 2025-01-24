@@ -1,34 +1,27 @@
 # Scoring code for The 2024 Pediatric Sepsis Challenge
 
-This repository contains the Python and MATLAB evaluation code for The 2023 Pediatric Sepsis Challenge.
+This repository contains the Python evaluation code for The 2024 Pediatric Sepsis Challenge.
 
-The `evaluate_model` script evaluates the outputs of your models using the evaluation metric that is described on the [webpage](https://physionetchallenges.org/20x/) for the 2023 Challenge. This script reports multiple evaluation metrics, so check the [scoring section](https://physionetchallenges.org/20xx/#scoring) of the webpage to see how we evaluate and rank your models.
+The `evaluate_2024` script evaluates the outputs of your models using the evaluation metric that is described on the [README](https://github.com/Kamaleswaran-Lab/The-2024-Pediatric-Sepsis-Challenge/blob/main/README.md) for the 2024 Challenge. This script reports multiple evaluation metrics, so check the [leaderboard scoring app](https://leaderboard-scoring-peds-sepsis-data-challenge-2024.streamlit.app) to see how we evaluate and rank your models.
 
 ## Python
 
 You can run the Python evaluation code by installing the NumPy package and running the following command in your terminal:
 
-    python evaluate_2024.py labels outputs scores.csv
+    python evaluate_2024.py test_data/file_with_labels test_outputs/outputs.txt scores.csv
 
 where
-
-- `labels` (input; required) is a folder with labels for the data, such as the [training data](https://physionetchallenges.org/20xx/#data) on the PhysioNet webpage;
-- `outputs` (input; required) is a folder containing files with your model's outputs for the data; and
+- `test_data` (input; required) is a folder containing file_with_labels.
+- `file_with_labels` (input; required) is a file with labels for the data, such as a dummy test set;
+- `test_outputs` (input; required) is a folder containing files with your model's outputs for the test data; and
 - `scores.csv` (output; optional) is a collection of scores for your model.
 
 
 ## Troubleshooting
 
-Unable to run this code with your code? Try one of the [example codes](https://physionetchallenges.org/20xx/#submissions) on the [training data](https://physionetchallenges.org/20xx/#data). Unable to install or run Python? Try [Python](https://www.python.org/downloads/), [Anaconda](https://www.anaconda.com/products/individual), or your package manager.
+Unable to run this code with your code? Try one of the [example codes](https://github.com/Kamaleswaran-Lab/The-2024-Pediatric-Sepsis-Challenge/tree/main/python-example-2023) on the [training data](https://github.com/Kamaleswaran-Lab/The-2024-Pediatric-Sepsis-Challenge/tree/main/SyntheticData_Training.csv). Unable to install or run Python? Try [Python](https://www.python.org/downloads/), [Anaconda](https://www.anaconda.com/products/individual), or your package manager.
 
 ## How do I learn more?
 
-Please see the [Challenge website](https://physionetchallenges.org/20xx/) for more details. Please post questions and concerns on the [Challenge discussion forum](https://groups.google.com/forum/#!forum/physionet-challenges).
-
-## Useful links
-
-- [Challenge website](https://physionetchallenges.org/20xx/)
-
-- [Python example code](https://github.com/physionetchallenges/python-example-2023)
-- [Frequently asked questions (FAQ) for this year's Challenge](https://physionetchallenges.org/2023/faq/)
+Please post questions and concerns on the [Challenge discussion forum](https://groups.google.com/g/2024-pediatric-sepsis-data-challenge).
 
