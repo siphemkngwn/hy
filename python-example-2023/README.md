@@ -16,7 +16,7 @@ You can install the dependencies for these scripts by running
 
 You can train your model by running
 
-    python train_model.py training_data model
+    python train_model.py training_data/SyntheticData_Training.csv model
 
 where
 
@@ -25,21 +25,22 @@ where
 
 You can run your trained model by running
 
-    python run_model.py model test_data test_outputs
+    python run_model.py model test_data/test_data.csv test_outputs
 
 where
 
 - `model` (input; required) is a folder for loading your model, and
-- `test_data` (input; required) is a folder with the validation or test data files (you can use the training data for debugging and cross-validation), and
+- `test_data` (input; required) is a folder with the validation or test data files (you can use the training data for debugging and cross-validation or a split from the training data can be used), and
 - `test_outputs` (output; required) is a folder for saving your model outputs.
 
 The [Challenge website](https://sepsis.ubc.ca/research/current-research-projects/pediatric-sepsis-data-challenge) provides a training database with a description of the contents and structure of the data files.
 
 You can evaluate your model by pulling or downloading the [evaluation code](evaluation-2024) and running
 
-    python evaluate_2024.py labels outputs scores.csv
+    python evaluate_2024.py test_data/test_data.csv test_outputs/outputs.txt scores.csv
 
-where `labels` is a folder with labels for the data, such as the training database on the webpage; `outputs` is a folder containing files with your model's outputs for the data; and `scores.csv` (optional) is a collection of scores for your model.
+
+where `test_data.csv` is a file with labels for the data, in this case it will be such as the training database on the webpage; `test_outputs` is a folder containing files with your model's outputs for the data; and `scores.csv` (optional) is a collection of scores for your model.
 
 ## Which scripts I can edit?
 
