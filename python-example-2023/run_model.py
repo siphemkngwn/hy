@@ -12,6 +12,7 @@
 import numpy as np, scipy as sp, os, sys
 from helper_code import *
 from team_code import load_challenge_model, run_challenge_model
+import time
 
 # Run model.
 def run_model(model_folder, data_folder, output_folder, allow_failures, verbose):
@@ -39,7 +40,13 @@ def run_model(model_folder, data_folder, output_folder, allow_failures, verbose)
     if verbose >= 1:
         print('Running the Challenge model on the Challenge data...')
     
+    # Initialize output variables to handle failures gracefully.
+    prediction_binary = []
+    prediction_probability = []
+
     # Allow or disallow the models to fail on parts of the data; this can be helpful for debugging.
+    # Measure inference time
+    start_time = time.time()
     try:
         patient_ids, prediction_binary, prediction_probability = run_challenge_model(model, data_folder, verbose) ### Teams: Implement this function!!!
     except:
@@ -47,8 +54,17 @@ def run_model(model_folder, data_folder, output_folder, allow_failures, verbose)
             if verbose >= 2:
                 print('... failed.')
                 prediction_binary, prediction_probability = float('nan'), float('nan')
-            else:
-                raise
+        else:
+            raise
+    end_time = time.time()
+    inference_time = end_time - start_time            
+    # Save inference time
+    inference_time_file = os.path.join(output_folder, 'inference_time.txt')
+    with open(inference_time_file, 'w') as f:
+        f.write(f"Inference time: {inference_time:.6f} seconds\n")
+        f.write(f"Number of patients: {num_patients}\n")
+        f.write(f"Average time per patient: {inference_time / num_patients:.6f} seconds\n")
+        
 
     # Save Challenge outputs.
 
