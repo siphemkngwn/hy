@@ -58,6 +58,9 @@ def run_model(model_folder, data_folder, output_folder, allow_failures, verbose)
             raise
     end_time = time.time()
     inference_time = end_time - start_time            
+    # Create a folder for the Challenge outputs if it does not already exist.
+    os.makedirs(output_folder, exist_ok=True)                          
+    
     # Save inference time
     inference_time_file = os.path.join(output_folder, 'inference_time.txt')
     with open(inference_time_file, 'w') as f:
@@ -65,11 +68,7 @@ def run_model(model_folder, data_folder, output_folder, allow_failures, verbose)
         f.write(f"Number of patients: {num_patients}\n")
         f.write(f"Average time per patient: {inference_time / num_patients:.6f} seconds\n")
         
-
     # Save Challenge outputs.
-
-    # Create a folder for the Challenge outputs if it does not already exist.
-    os.makedirs(output_folder, exist_ok=True)                          
     output_file = os.path.join(output_folder, 'outputs' + '.txt')                     
     save_challenge_outputs(output_file, patient_ids, prediction_binary, prediction_probability)    
 
