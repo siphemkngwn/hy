@@ -58,7 +58,7 @@ Please do **not** edit the following scripts. We will use the unedited versions 
 
 These scripts must remain in the root path of your repository, but you can put other scripts and other files elsewhere in your repository.
 
-## How do I train, save, load, and run my model?
+## How do I train, save, load, and run my model for getting leaderboard metrics on a dummy test set?
 
 To train and save your models, please edit the `train_challenge_model` function in the `team_code.py` script. Please do not edit the input or output arguments of the `train_challenge_model` function.
 
