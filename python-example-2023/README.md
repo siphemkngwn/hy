@@ -103,7 +103,7 @@ If you have trouble running your code, then please try the follow steps to run t
 
         root@[...]:/challenge# python run_model.py model test_data/test_data.csv test_outputs
 
-        root@[...]:/challenge# python evaluate_2024.py test_data/test_data.csv test_outputs/outputs.txt test_outputs/inference_time.txt 
+        root@[...]:/challenge# python evaluate_2024.py test_data/test_data.csv test_outputs/outputs.txt test_outputs/inference_time.txt score.json
         [...]
 
         root@[...]:/challenge# exit
