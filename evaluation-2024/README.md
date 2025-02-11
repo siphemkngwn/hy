@@ -8,13 +8,13 @@ The `evaluate_2024` script evaluates the outputs of your models using the evalua
 
 You can run the Python evaluation code by installing the NumPy package and running the following command in your terminal:
 
-    python evaluate_2024.py test_data/file_with_labels test_outputs/outputs.txt test_outputs/inference_time.txt scores.csv
+    python evaluate_2024.py test_data/file_with_labels test_outputs/outputs.txt test_outputs/inference_time.txt scores.json
 
 where
 - `test_data` (input; required) is a folder containing file_with_labels.
 - `file_with_labels` (input; required) is a file with labels for the data, such as a dummy test set;
 - `test_outputs` (input; required) is a folder containing files with your model's outputs as outputs.txt and inference time as inference_time.txt; and
-- `scores.csv` (output; optional) is a collection of scores for your model.
+- `scores.json` (output; optional) is a collection of scores for your model.
 
 
 ## Troubleshooting
