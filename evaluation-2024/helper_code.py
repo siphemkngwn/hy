@@ -9,6 +9,14 @@ import pandas as pd
 
 ### Challenge data I/O functions
 
+def load_challenge_labels(data_folder):
+  
+        data = pd.read_csv(data_folder)
+        label = data['inhospital_mortality']
+        patient_ids = data['studyid_adm']
+        
+        return patient_ids, label
+
 def load_challenge_data(data_folder):
   
         data = pd.read_csv(data_folder)
@@ -18,6 +26,15 @@ def load_challenge_data(data_folder):
         features = data.columns
         
         return patient_ids, data, label, features
+
+def load_challenge_testdata(data_folder):
+  
+        data = pd.read_csv(data_folder)
+        patient_ids = data['studyid_adm']
+        data = data.drop(['studyid_adm'], axis=1)
+        features = data.columns
+        
+        return patient_ids, data, features
   
  
 # Save the Challenge outputs for one file.
