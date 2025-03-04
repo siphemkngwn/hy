@@ -6,6 +6,7 @@
 
 import os, numpy as np, scipy as sp, scipy.io
 import pandas as pd
+import psutil
 
 ### Challenge data I/O functions
 
@@ -17,16 +18,32 @@ def load_challenge_labels(data_folder):
         
         return patient_ids, label
 
+
+def load_challenge_data(data_folder):
+    data = pd.read_csv(data_folder)
+    
+    # Check if the expected columns are present; if not, assign NA.
+    label = data['inhospital_mortality'] if 'inhospital_mortality' in data.columns else pd.NA
+    patient_ids = data['studyid_adm'] if 'studyid_adm' in data.columns else pd.NA
+    
+    # Drop the columns if they exist in the DataFrame.
+    cols_to_drop = [col for col in ['studyid_adm', 'inhospital_mortality'] if col in data.columns]
+    data = data.drop(columns=cols_to_drop)
+    
+    features = data.columns
+    return patient_ids, data, label, features
+'''
 def load_challenge_data(data_folder):
   
         data = pd.read_csv(data_folder)
+
         label = data['inhospital_mortality']
         patient_ids = data['studyid_adm']
         data = data.drop(['studyid_adm','inhospital_mortality'], axis=1)
         features = data.columns
         
         return patient_ids, data, label, features
-
+'''
 def load_challenge_testdata(data_folder):
   
         data = pd.read_csv(data_folder)
@@ -35,23 +52,20 @@ def load_challenge_testdata(data_folder):
         features = data.columns
         
         return patient_ids, data, features
-  
  
 # Save the Challenge outputs for one file.
 def save_challenge_outputs(output_folder, patient_ids, prediction_binary, prediction_probability):
-    
-    # Sanitize values, e.g., in case they are a singleton array.
-    prediction_binary = sanitize_boolean_value(prediction_binary)
-    prediction_probability = sanitize_scalar_value(prediction_probability)
     
     if output_folder is not None:
       with open(output_folder, 'w') as f:
           f.write('PatientID|PredictedProbability|PredictedBinary\n')
           for (i, p, b) in zip(patient_ids, prediction_probability, prediction_binary):
               f.write('%d|%g|%d\n' % (i, p, b))
- 
+              
+    return None
+  
 
- # Load the Challenge predictions for all of the patients.
+# Load the Challenge predictions for all of the patients.
 def load_challenge_predictions(folder):
     with open(folder, 'r') as f:
         header = f.readline().strip()
@@ -63,8 +77,8 @@ def load_challenge_predictions(folder):
     prediction_binary = predictions[:,2].astype(int)
     
     return patient_ids, prediction_probability, prediction_binary
-             
-        
+  
+  
 ### Other helper functions
 
 # Check if a variable is a number or represents a number.
@@ -118,3 +132,17 @@ def sanitize_scalar_value(x):
     else:
         return float('nan')
 
+# Function to compute normalized compute resource usage
+def compute_resource():
+    """
+    Compute compute resource usage as a penalty metric.
+
+    Uses psutil to track memory and CPU usage dynamically.
+    
+    Returns:
+    - float: compute resource usage.
+    """
+    process = psutil.Process(os.getpid())  # Get current process
+    memory_usage = process.memory_info().rss / (1024 ** 2)  # Convert bytes to MB
+    cpu_time = process.cpu_times().user + process.cpu_times().system  # Total CPU time in seconds
+    return memory_usage, cpu_time
