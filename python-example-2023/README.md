@@ -37,10 +37,10 @@ The [Challenge website](https://sepsis.ubc.ca/research/current-research-projects
 
 You can evaluate your model by pulling or downloading the [evaluation code](evaluation-2024) and running
 
-    python evaluate_2024.py test_data/test_data.csv test_outputs/outputs.txt scores.csv
+    python evaluate_2024.py test_data/labels.csv test_outputs/outputs.txt test_outputs/outputs.txt scores.json 0.5
 
 
-where `test_data.csv` is a file with labels for the data, in this case it will be such as the training database on the webpage; `test_outputs` is a folder containing files with your model's outputs for the data; and `scores.csv` (optional) is a collection of scores for your model.
+where `labels.csv` is a file with labels for the data, in this case it will be such as the training database on the webpage; `test_outputs` is a folder containing files with your model's outputs for the data; and `scores.csv` (optional) is a collection of scores for your model.
 
 ## Which scripts I can edit?
 
@@ -103,7 +103,7 @@ If you have trouble running your code, then please try the follow steps to run t
 
         root@[...]:/challenge# python run_model.py model test_data/test_data.csv test_outputs
 
-        root@[...]:/challenge# python evaluate_2024.py test_data/test_data.csv test_outputs/outputs.txt test_outputs/inference_time.txt score.json
+        root@[...]:/challenge# python evaluate_2024.py test_data/labels.csv test_outputs/outputs.txt test_outputs/inference_time.txt threshold.txt score.json
         [...]
 
         root@[...]:/challenge# exit
