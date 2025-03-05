@@ -12,7 +12,7 @@ You can run the Python evaluation code by installing the NumPy package and runni
 
 where
 - `test_data` (input; required) is a folder containing file_with_labels.
-- `file_with_labels` (input; required) is a file with labels for the data, such as a dummy test set;
+- `file_with_labels` (input; required) is a file with labels for the data, such as a dummy test set or labels.csv;
 - `test_outputs` (input; required) is a folder containing files with your model's outputs as outputs.txt and inference time as inference_time.txt; and
 - `threshold.txt` (input; optional) files with your probability threshold. If not provided, default threshold = 0.5 will be used. 
 - `scores.json` (output; optional) is a collection of scores for your model.
