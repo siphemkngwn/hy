@@ -1,155 +1,115 @@
-# Pediatric Sepsis Data Challenge: In-Hospital Mortality Prediction Task
+# Python example code for The 2024 Pediatric Sepsis Challenge
 
-<!-- Brief introduction to the challenge and its objectives -->
-Welcome to the Pediatric Sepsis Data Challenge! This challenge focuses on predicting in-hospital mortality for pediatric sepsis cases using a synthetic dataset derived from real-world data. The ultimate goal is to improve early detection models for better resource allocation and clinical outcomes in low-resource healthcare settings.
+## What's in this repository?
 
-## Objective
+This repository contains a simple example to illustrate how to format a Python entry for The 2024 Pediatric Sepsis Challenge. You can try it by running the following commands on the Challenge training sets. These commands should take a few minutes or less to run from start to finish on a recent personal computer.
 
-<!-- State the primary task for participants -->
-Develop an open-source algorithm to predict in-hospital mortality among children with sepsis. This algorithm should be trained solely on the provided dataset, using any or all variables available within.
+For this example, we implemented a random forest model with several features. You can use different models, features, and libraries for your entry. This simple example is designed **not** to perform well, so you should **not** use it as a baseline for your model's performance.
 
-## Contents
+This code uses four main scripts, described below, to train and run a model for the Challenge.
 
-<!-- Table of contents for easy navigation in a Markdown file -->
-1. [Data and Code Requirements](#1-data-and-code-requirements)
-2. [Submission Guidelines and Limits](#2-submission-guidelines-and-limits)
-3. [Submission Instructions for Your Code](#3-Submission-Instructions-for-Your-Code)
-4. [Testing and Evaluation Criteria](#4-testing-and-evaluation-criteria)
-5. [Final Instructions](#5-final-instructions)
+## How do I run these scripts?
 
----
+You can install the dependencies for these scripts by running
 
-## 1. Data and Code Requirements
+    pip install -r requirements.txt
 
-#### Dataset
+You can train your model by running
 
-- **Provided Dataset**: Synthetic data derived from real hospital data from Uganda, use file SyntheticData_Training.csv as training data, and SyntheticData_DataDictionary_V1.docx as data dictionary.
-- **Feature Constraints**: Your algorithm should exclusively use the provided dataset variables for predictions.
+    python train_model.py training_data/SyntheticData_Training.csv model
 
-#### Submission Requirements
+where
 
-- **Code and Model**: Submit both:
-  - **Training Code**: All scripts and code required for training the model.
-  - **Trained Model**: The model file generated from your code.
-  - **Language**: Submissions must be in Python; however, R, and MATLAB submissions are no longer acceptable. Python is recommended to facilitate baseline comparisons.
+- `training_data` (input; required) is a folder with the training data files and
+- `model` (output; required) is a folder for saving your model.
 
+You can run your trained model by running
 
+    python run_model.py model test_data/test_data.csv test_outputs
 
-#### Code Validity
+where
 
-- **Environment**: Code will run in a containerized setup.
-- **Execution Time**: Maximum 24 hours for training, with 8 hours allocated for validation and testing.
-- **Autonomous Execution**: Ensure your code can execute end-to-end without manual intervention.
-  - **Dependencies**: List all dependencies in `requirements.txt` or a compatible environment configuration file.
+- `model` (input; required) is a folder for loading your model, and
+- `test_data` (input; required) is a folder with the validation or test data files (you can use the training data for debugging and cross-validation or a split from the training data can be used), and
+- `test_outputs` (output; required) is a folder for saving your model outputs.
 
----
+The [Challenge website](https://sepsis.ubc.ca/research/current-research-projects/pediatric-sepsis-data-challenge) provides a training database with a description of the contents and structure of the data files.
 
-## 2. Submission Guidelines and Limits
+You can evaluate your model by pulling or downloading the [evaluation code](evaluation-2024) and running
 
-#### Submission Limit
-
-- Each team may submit code up to **3 times** throughout the challenge.
-
-#### Evaluation
-
-- Each submission will be assessed on a hidden evaluation set to ensure unbiased scoring.
-- Only the **final model from each training phase** will be evaluated for the official score.
-
-#### Repository Security
-
-- Teams are expected to maintain their code in **private repositories** during the challenge to ensure fairness.
-
-#### Post-Challenge Public Release
-
-<!-- Explain the requirements for the public release of solutions after the challenge concludes -->
-Upon completion, all final solutions must be shared publicly (e.g., GitHub) to promote reproducibility and transparency.
-
-**Public Release Requirements**:
-- Complete source code and trained models.
-- Detailed README file with instructions for replication.
-- An open-source license (e.g., MIT, BSD) specifying usage and redistribution rights.
-
----
-
-## 3. Submission Instructions for Your Code
-
-### Overview
-Use the provided [Python example code](python-example-2023) as a starting point. Clone or download this repository, replace the example code with your implementation, and push or upload the updated files to your repository. Share your repository with the aditya1000 & PediatricSepsisDataChallenge2024 user. Submit your entry using this [submission form](https://docs.google.com/forms/d/e/1FAIpQLSdLvCU4BG4ttA8Gkek8XK0QhsQpbiTUnBZ7__fVCCQcvIEnIQ/viewform?pli=1). 
-
-### File Descriptions and Guidelines
-
-#### 1. **Dockerfile**
-- Update the `Dockerfile` to specify the version of Python you are using locally.
-- Add any additional packages required for your code.
-- **Important**: Do not rename or relocate the `Dockerfile`. Its structure must remain intact, especially the three lines marked as "DO NOT EDIT." These lines are critical for our submission system.
-
-#### 2. **requirements.txt**
-- Add all Python packages required by your code.
-- Specify the exact versions of these packages to match your local environment.
-- Remove any unnecessary packages that your code does not depend on.
-
-#### 3. **Documentation Files**
-- Update the following files as needed:
-  - `AUTHORS.txt`: Include the names of all contributors.
-  - `LICENSE.txt`: Specify your license terms.
-  - `README.md`: Provide relevant information about your code.  
-- **Note**: Our submission system does not use the README file to determine how to execute your code.
-
-#### 4. **Code Scripts**
-- **`team_code.py`**: Modify this script to load and run your trained model(s).
-- **`train_model.py`**: Do not modify this script. It calls functions in `team_code.py` to train your model using the training data.
-- **`helper_code.py`**: Do not modify this script. It provides helper functions for your code. Feel free to use these functions, but note that any changes made to this file will not be included when we run your code.
-- **`run_model.py`**: Do not modify this script. It calls functions in `team_code.py` to load and run your trained models on the test data. Any changes to this file will not be reflected in our execution environment.
-
-#### 5. **Docker Development**
-- You can develop and test your code without using Docker. However, before submission, ensure that you can:
-  - Build a Docker image from your `Dockerfile`.
-  - Successfully run your code within a Docker container.
-
-### Submission Instructions
-1. Push or upload your updated code to the root directory of the `master` branch in your repository.
-2. Ensure the repository contains all necessary files and updates as described above.
-
-### Execution on Our System
-Once submitted, we will:
-1. Download your repository.
-2. Build a Docker image using your `Dockerfile`.
-3. Execute your code in our local or cloud environment.
-
----
-
-### 4. Testing and Evaluation Criteria (Tentative)
-
-<!-- Details on how submissions will be evaluated based on several key metrics -->
-Your model will be evaluated on the following metrics:
-
-1. **Area Under the ROC Curve (AUC-ROC)**: A secondary metric to measure general performance across thresholds.
-2. **AUPRC:** Focuses on precision and recall, especially useful for imbalanced datasets.
-3. **Net Benefit:** 
-Balances true positives and false positives to measure decision-making utility.
-4. **Estimated Calibration Error (ECE):** 
-Assesses how well predicted probabilities align with actual outcomes.
-
-To get your leaderboard score on test data use [evaluate_2024.py](evaluation-2024) file after reading the respective [README.md](evaluation-2024) from evaluation-2024 folder of this repository. 
-
----
+    python evaluate_2024.py test_data/labels.csv test_outputs/outputs.txt test_outputs/inference_time.txt threshold.txt score.json
 
 
+where `labels.csv` is a file with labels for the data, in this case it will be such as the training database on the webpage; `test_outputs` is a folder containing files with your model's outputs for the data; and `scores.json` (optional) is a collection of scores for your model.
 
----
+## Which scripts I can edit?
 
-### 5. Final Instructions
+We will run the `train_model.py` and `run_model.py` scripts to train and run your model, so please check these scripts and the functions they call.
 
-#### Autonomous Execution
-- Ensure all components of your submission run autonomously from start to finish in a **cloud-based container**.
+Please edit the following script to add your training and testing code:
 
-#### Leaderboard
-- Scores will be updated on the leaderboard based on the **best score achieved**.
+* `team_code.py` is a script with functions for training and running your model.
 
-#### Open-Source Compliance
-- Ensure that your final submission is properly documented and made available publicly after the completion of the competition.
+Please do **not** edit the following scripts. We will use the unedited versions of these scripts when running your code:
 
----
+* `train_model.py` is a script for training your model.
+* `run_model.py` is a script for running your trained model.
+* `helper_code.py` is a script with helper functions that we used for our code. You are welcome to use them in your code.
 
-We are excited to see your innovative solutions aimed at improving pediatric sepsis outcomes in resource-constrained settings!
+These scripts must remain in the root path of your repository, but you can put other scripts and other files elsewhere in your repository.
+
+## How do I train, save, load, and run my model for getting leaderboard metrics on a dummy test set?
+
+To train and save your models, please edit the `train_challenge_model` function in the `team_code.py` script. Please do not edit the input or output arguments of the `train_challenge_model` function.
+
+To load and run your trained model, please edit the `load_challenge_model` and `run_challenge_model` functions in the `team_code.py` script. Please do not edit the input or output arguments of the functions of the `load_challenge_model` and `run_challenge_model` functions.
+
+
+If you have trouble running your code, then please try the follow steps to run the example code.
+
+1. Create a folder `example` in your home directory with several subfolders.
+
+        user@computer:~$ cd ~/
+        user@computer:~$ mkdir example
+        user@computer:~$ cd example
+        user@computer:~/example$ mkdir training_data test_data model test_outputs
+
+2. Download the training data. Put some of the training data in `training_data` and `test_data`. You can use some of the training data to check your code (and should perform cross-validation on the training data to evaluate your algorithm).
+
+3. Download or clone this repository in your terminal.
+
+4. Build a Docker image and run the example code in your terminal.
+
+        user@computer:~/example$ ls
+        model  python-example-2023  test_data  test_outputs  training_data
+
+        user@computer:~/example$ cd python-example-2023/
+
+        user@computer:~/example/python-example-2023$ docker build -t image .
+
+        Sending build context to Docker daemon  [...]kB
+        [...]
+        Successfully tagged image:latest
+
+        user@computer:~/example/python-example-2023$ docker run -it -v ~/example/model:/challenge/model -v ~/example/test_data:/challenge/test_data -v ~/example/test_outputs:/challenge/test_outputs -v ~/example/training_data:/challenge/training_data image bash
+# Should be editted
+        root@[...]:/challenge# ls
+            Dockerfile             README.md         test_outputs
+            evaluate_2024.py      requirements.txt  training_data
+            helper_code.py         team_code.py      train_model.py
+            LICENSE                run_model.py
+
+        root@[...]:/challenge# python train_model.py training_data/SyntheticData_Training.csv model
+
+        root@[...]:/challenge# python run_model.py model test_data/test_data.csv test_outputs
+
+        root@[...]:/challenge# python evaluate_2024.py test_data/labels.csv test_outputs/outputs.txt test_outputs/inference_time.txt threshold.txt score.json
+        [...]
+
+        root@[...]:/challenge# exit
+        Exit
+
+## How do I learn more?
+
+Please see the [Challenge website](https://sepsis.ubc.ca/research/current-research-projects/pediatric-sepsis-data-challenge) for more details. Please post questions and concerns on the [Challenge discussion forum](https://groups.google.com/g/2024-pediatric-sepsis-data-challenge).
 
