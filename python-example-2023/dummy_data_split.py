@@ -3,7 +3,7 @@ from sklearn.model_selection import train_test_split
 import sys
 
 def stratified_split_and_save(data_path, test_size=0.2, random_state=42, verbose=True,
-                              train_output="train_split.csv", test_output="test_split.csv",
+                              train_output="train_data.csv", test_output="test_data.csv",
                               labels_output="labels.csv"):
     """
     Loads data from the given CSV, performs a stratified 80:20 train–test split based on the 
