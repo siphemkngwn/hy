@@ -1,115 +1,155 @@
-# Python example code for The 2024 Pediatric Sepsis Challenge
+# Phase 2 Submission
 
-## What's in this repository?
+This is the Phase 2 submission for the Challenge. In this phase, we have made several improvements and updates over the previous submission. These changes enhance reproducibility, consistency, and robustness of our evaluation. 
+---
 
-This repository contains a simple example to illustrate how to format a Python entry for The 2024 Pediatric Sepsis Challenge. You can try it by running the following commands on the Challenge training sets. These commands should take a few minutes or less to run from start to finish on a recent personal computer.
+## What's New in Phase 2
 
-For this example, we implemented a random forest model with several features. You can use different models, features, and libraries for your entry. This simple example is designed **not** to perform well, so you should **not** use it as a baseline for your model's performance.
+Overall major function arguments remains same, some new functionality have been added as follows.
 
-This code uses four main scripts, described below, to train and run a model for the Challenge.
+- **Enhanced Data Loading I/O:**  
+  - The `load_challenge_data` function now checks for the presence of key columns (e.g., `studyid_adm` and `inhospital_mortality`). If these columns are missing, they are set to `NA` and then dropped before processing.
+  - The `load_challenge_testdata` function accepts an optional list of selected columns. This ensures that during inference, only the necessary columns are loaded from the CSV.
+  - New helper functions have been added to read selected variables either from the model dictionary or from a file (e.g., `selected_features.txt`) in the model folder or root directory.
 
-## How do I run these scripts?
+- **Threshold Handling Improvements:**  
+  - A new mechanism is implemented to read the classification threshold from a file. If the file is missing or cannot be read, the system computes an approximate threshold from the prediction probabilities and binary predictions.
 
-You can install the dependencies for these scripts by running
+- **Parsimony Score Calculation:**  
+  - The parsimony score is computed as the number of selected variables divided by the total number of available predictors (136 by default after excluding identifiers). This metric helps quantify model complexity.
 
-    pip install -r requirements.txt
+- **Compute Calculation:**  
+  - We now track and report compute resource usage—including memory usage and CPU time—using `psutil`. This data is recorded during inference and included in the evaluation metrics.
 
-You can train your model by running
+---
 
-    python train_model.py training_data/SyntheticData_Training.csv model
 
-where
+## Submission Structure
 
-- `training_data` (input; required) is a folder with the training data files and
-- `model` (output; required) is a folder for saving your model.
+```bash
+submission/
+├── Dockerfile                # REQUIRED: Defines the container image and entry point.
+├── requirements.txt          # REQUIRED: Lists all Python dependencies.
+├── run_model.py              # Not required: Script to run inference and evaluation.
+├── team_code.py              # REQUIRED: Contains your training and inference functions.
+├── helper_code.py            # Not required: Contains helper functions used by your code.
+├── threshold.txt             # REQUIRED: Contains the probability threshold (e.g., 0.5), either get calculated during training or model run or hard coded.  
+├── selected_features.txt     # OPTIONAL: Contains the raw selected features used for training, if not given/calculated explicitely all features with be considered as used for parsimony.
+├── dummy_columns.txt         # OPTIONAL: Contains the dummy‐encoded column names (if not stored in model folder).
+└── model/
+    ├── model.sav             # REQUIRED: Serialized trained model (includes imputer, prediction_model, etc.).
+    ├── dummy_columns.txt     # OPTIONAL: List of dummy‐encoded columns (used to align test data).
+    └──selected_features.txt  # OPTIONAL: A copy of selected_features.txt (for reference).
+```
 
-You can run your trained model by running
+## File Descriptions
 
+- **Dockerfile**  
+  Defines your container image. It installs dependencies from `requirements.txt` and sets the entry point (for example, to run `run_model.py`).
+
+- **requirements.txt**  
+  Lists all necessary Python libraries (e.g., numpy, pandas, scikit-learn, joblib, mne, psutil).
+
+- **run_model.py**  
+  Loads the trained model, runs inference on test data, computes inference time and resource usage, and writes outputs including the parsimony score.
+
+- **team_code.py**  
+  Contains your team's training and inference functions. The training code now saves both the raw selected features and the dummy‑encoded columns, while the inference code uses these files for consistency.
+
+- **helper_code.py**  
+  Contains utility functions for loading data, saving outputs, and computing resource usage.
+
+- **threshold.txt**  
+  Contains the classification probability threshold (e.g., `0.5`). This value can be computed during training or hard coded.
+
+- **selected_features.txt**  
+  Contains a list of the raw features selected for training. This file is used during inference to load only the necessary columns and to compute the parsimony score. If this file is absent, all features will be used.
+
+- **dummy_columns.txt**  
+  Contains the list of dummy‑encoded feature names, which are used to align test data with the training features. Alternatively, these may be stored in `columns.txt` within the model folder.
+
+- **model/**  
+  - **model.sav:** The serialized model including the imputer and prediction model.
+  - **dummy_columns.txt:** Required file listing the dummy‑encoded columns used during training.
+  - **selected_features.txt:** (Optional) A copy of `selected_features.txt` for reference.
+  - **total_features.txt:** (Optional) Contains the total number of raw features (e.g., 136) available, used to compute the parsimony score.
+
+---
+---
+
+## How to Run the Phase-2 Challenge Example Code in Docker
+
+Follow these steps to run the example code in a Docker environment: 
+
+1. **Prepare Your Local Directory Structure:**
+
+   Create a directory (e.g., `~/example`) with the required subfolders:
+
+   ```bash
+   mkdir -p ~/example/{mkdir training_data test_data model test_outputs}
+
+2. **Clone or Download the Repository:**
+  
+    Clone the updated repository containing the example submission submission:
+    ```bash
+    git clone --branch Phase2 https://github.com/Kamaleswaran-Lab/The-2024-Pediatric-Sepsis-Challenge.git
+    cd The-2024-Pediatric-Sepsis-Challenge
+    ```
+    We have provided example train_data.csv and test_data.csv and labels.csv on the above cloned example repo.
+    You may consider placing them or your own csvs in those folders for testing and debuggig. 
+    - Place training CSV files into ~/example/training_data
+    - Place test CSV files into ~/example/test_data
+
+3. Build the Docker Image:
+    
+    In the root of the repository, build the Docker image using the provided Dockerfile:
+    ```bash
+    docker build -t image .
+    ```
+3. Run the Docker Container with Volume Mappings:
+   
+   Start the Docker container and map your local directories into the container. For example:
+    ```bash
+    docker run -it \
+    -v ~/example/model:/challenge/model \
+    -v ~/example/test_data:/challenge/test_data \
+    -v ~/example/test_outputs:/challenge/test_outputs \
+    -v ~/example/training_data:/challenge/training_data \
+    image bash
+    ```
+
+4. Inside the Container:
+  
+    Once inside the container, verify that the directory structure is correct:
+    ```bash  
+    root@[...]:/challenge# ls
+        Dockerfile             README.md         test_outputs
+        evaluate_2024.py      requirements.txt  training_data
+        helper_code.py         team_code.py      train_model.py
+        LICENSE                run_model.py    dummy_data_split.py
+
+    ```
+
+    **Train Your Model:**
+    Run the training script to build and save your model:
+    ```bash
+    python train_model.py training_data/training_data.csv model
+    ```
+    **Run Your Trained Model**:
+    Execute the inference script to generate predictions:
+    ```bash
     python run_model.py model test_data/test_data.csv test_outputs
-
-where
-
-- `model` (input; required) is a folder for loading your model, and
-- `test_data` (input; required) is a folder with the validation or test data files (you can use the training data for debugging and cross-validation or a split from the training data can be used), and
-- `test_outputs` (output; required) is a folder for saving your model outputs.
-
-The [Challenge website](https://sepsis.ubc.ca/research/current-research-projects/pediatric-sepsis-data-challenge) provides a training database with a description of the contents and structure of the data files.
-
-You can evaluate your model by pulling or downloading the [evaluation code](evaluation-2024) and running
-
+    ```
+    **Evaluate Your Model:**
+    Finally, run the evaluation script to compute performance metrics (e.g., AUC, AUPRC, Sensitivity parsimony score, compute usage):
+    ```bash
     python evaluate_2024.py test_data/labels.csv test_outputs/outputs.txt test_outputs/inference_time.txt threshold.txt score.json
-
-
-where `labels.csv` is a file with labels for the data, in this case it will be such as the training database on the webpage; `test_outputs` is a folder containing files with your model's outputs for the data; and `scores.json` (optional) is a collection of scores for your model.
-
-## Which scripts I can edit?
-
-We will run the `train_model.py` and `run_model.py` scripts to train and run your model, so please check these scripts and the functions they call.
-
-Please edit the following script to add your training and testing code:
-
-* `team_code.py` is a script with functions for training and running your model.
-
-Please do **not** edit the following scripts. We will use the unedited versions of these scripts when running your code:
-
-* `train_model.py` is a script for training your model.
-* `run_model.py` is a script for running your trained model.
-* `helper_code.py` is a script with helper functions that we used for our code. You are welcome to use them in your code.
-
-These scripts must remain in the root path of your repository, but you can put other scripts and other files elsewhere in your repository.
-
-## How do I train, save, load, and run my model for getting leaderboard metrics on a dummy test set?
-
-To train and save your models, please edit the `train_challenge_model` function in the `team_code.py` script. Please do not edit the input or output arguments of the `train_challenge_model` function.
-
-To load and run your trained model, please edit the `load_challenge_model` and `run_challenge_model` functions in the `team_code.py` script. Please do not edit the input or output arguments of the functions of the `load_challenge_model` and `run_challenge_model` functions.
-
-
-If you have trouble running your code, then please try the follow steps to run the example code.
-
-1. Create a folder `example` in your home directory with several subfolders.
-
-        user@computer:~$ cd ~/
-        user@computer:~$ mkdir example
-        user@computer:~$ cd example
-        user@computer:~/example$ mkdir training_data test_data model test_outputs
-
-2. Download the training data. Put some of the training data in `training_data` and `test_data`. You can use some of the training data to check your code (and should perform cross-validation on the training data to evaluate your algorithm).
-
-3. Download or clone this repository in your terminal.
-
-4. Build a Docker image and run the example code in your terminal.
-
-        user@computer:~/example$ ls
-        model  python-example-2023  test_data  test_outputs  training_data
-
-        user@computer:~/example$ cd python-example-2023/
-
-        user@computer:~/example/python-example-2023$ docker build -t image .
-
-        Sending build context to Docker daemon  [...]kB
-        [...]
-        Successfully tagged image:latest
-
-        user@computer:~/example/python-example-2023$ docker run -it -v ~/example/model:/challenge/model -v ~/example/test_data:/challenge/test_data -v ~/example/test_outputs:/challenge/test_outputs -v ~/example/training_data:/challenge/training_data image bash
-# Should be editted
-        root@[...]:/challenge# ls
-            Dockerfile             README.md         test_outputs
-            evaluate_2024.py      requirements.txt  training_data
-            helper_code.py         team_code.py      train_model.py
-            LICENSE                run_model.py
-
-        root@[...]:/challenge# python train_model.py training_data/SyntheticData_Training.csv model
-
-        root@[...]:/challenge# python run_model.py model test_data/test_data.csv test_outputs
-
-        root@[...]:/challenge# python evaluate_2024.py test_data/labels.csv test_outputs/outputs.txt test_outputs/inference_time.txt threshold.txt score.json
-        [...]
-
-        root@[...]:/challenge# exit
-        Exit
-
-## How do I learn more?
-
-Please see the [Challenge website](https://sepsis.ubc.ca/research/current-research-projects/pediatric-sepsis-data-challenge) for more details. Please post questions and concerns on the [Challenge discussion forum](https://groups.google.com/g/2024-pediatric-sepsis-data-challenge).
-
+    ```
+    The evaluation output will be saved in score.json.
+    
+    **Exit the Container:**
+    Once finished, simply type:
+    ```bash
+    exit
+    ```
+These steps ensure that you run the complete Phase 2 example code in a reproducible Docker environment. The code includes flexible thresholding, compute resource tracking, and parsimony score calculation.
