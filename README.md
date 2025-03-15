@@ -1,6 +1,6 @@
 # Phase 2 Submission
 
-This is the Phase 2 submission for the Challenge. In this phase, we have made several improvements and updates over the previous submission. These changes enhance reproducibility, consistency, and robustness of our evaluation. 
+This is the Phase 2 example submission. In this phase, we have made few improvements and updates over the previous submission. These changes enhance reproducibility, consistency, and robustness of our evaluation. 
 ---
 
 ## What's New in Phase 2
