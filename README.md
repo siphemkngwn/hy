@@ -9,7 +9,7 @@ Overall major function arguments remains same, some new functionality have been 
 
 - **Enhanced Data Loading I/O:**  
   - The `load_challenge_testdata` function accepts an optional list of selected columns. This ensures that during inference, only the necessary columns are loaded from the CSV.
-  - New helper functions have been added to read selected variables either from the model dictionary or from a file (e.g., `selected_features.txt`) in the model folder or root directory.
+  - New helper functions have been added to read selected variables either from the model dictionary or from a file (e.g., `selected_variables.txt`) in the model folder or root directory.
 
 - **Threshold Handling Improvements:**  
   - A new mechanism is implemented to read the classification threshold from a file. If the file is missing or cannot be read, the system computes an approximate threshold from the prediction probabilities and binary predictions.
