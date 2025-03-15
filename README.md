@@ -71,7 +71,6 @@ submission/
   - **model.sav:** The serialized model including the imputer and prediction model.
   - **dummy_columns.txt:** Required file listing the dummy‑encoded columns used during training.
   - **selected_variables.txt:** (Optional) A copy of `selected_variables.txt` for reference.
-  - **total_features.txt:** (Optional) Contains the total number of raw features (e.g., 136) available, used to compute the parsimony score.
 
 ---
 ---
