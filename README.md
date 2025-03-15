@@ -33,12 +33,12 @@ submission/
 ├── team_code.py              # REQUIRED: Contains your training and inference functions.
 ├── helper_code.py            # Not required: Contains helper functions used by your code.
 ├── threshold.txt             # REQUIRED: Contains the probability threshold (e.g., 0.5), either get calculated during training or model run or hard coded.  
-├── selected_features.txt     # OPTIONAL: Contains the raw selected features used for training, if not given/calculated explicitely all features with be considered as used for parsimony.
+├── selected_variables.txt     # OPTIONAL: Contains the raw selected variables used for training, if not given/calculated explicitely all features with be considered as used for parsimony.
 ├── dummy_columns.txt         # OPTIONAL: Contains the dummy‐encoded column names (if not stored in model folder).
 └── model/
     ├── model.sav             # REQUIRED: Serialized trained model (includes imputer, prediction_model, etc.).
     ├── dummy_columns.txt     # OPTIONAL: List of dummy‐encoded columns (used to align test data).
-    └──selected_features.txt  # OPTIONAL: A copy of selected_features.txt (for reference).
+    └──selected_variables.txt  # OPTIONAL: A copy of selected_variables.txt (for reference).
 ```
 
 ## File Descriptions
@@ -61,8 +61,8 @@ submission/
 - **threshold.txt**  
   Contains the classification probability threshold (e.g., `0.5`). This value can be computed during training or hard coded.
 
-- **selected_features.txt**  
-  Contains a list of the raw features selected for training. This file is used during inference to load only the necessary columns and to compute the parsimony score. If this file is absent, all features will be used.
+- **selected_variables.txt**  
+  Contains a list of the raw variables selected for training. This file is used during inference to load only the necessary columns and to compute the parsimony score. If this file is absent, all features will be used.
 
 - **dummy_columns.txt**  
   Contains the list of dummy‑encoded feature names, which are used to align test data with the training features. Alternatively, these may be stored in `columns.txt` within the model folder.
@@ -70,7 +70,7 @@ submission/
 - **model/**  
   - **model.sav:** The serialized model including the imputer and prediction model.
   - **dummy_columns.txt:** Required file listing the dummy‑encoded columns used during training.
-  - **selected_features.txt:** (Optional) A copy of `selected_features.txt` for reference.
+  - **selected_variables.txt:** (Optional) A copy of `selected_variables.txt` for reference.
   - **total_features.txt:** (Optional) Contains the total number of raw features (e.g., 136) available, used to compute the parsimony score.
 
 ---
