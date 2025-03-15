@@ -93,11 +93,11 @@ Follow these steps to run the example code in a Docker environment:
     git clone --branch Phase2 https://github.com/Kamaleswaran-Lab/The-2024-Pediatric-Sepsis-Challenge.git
     cd The-2024-Pediatric-Sepsis-Challenge
     ```
-    We have provided example train_data.csv and test_data.csv and labels.csv on the above cloned example repo.
-    You may consider placing them or your own csvs in those folders for testing and debuggig. 
-    - Place training CSV files into ~/example/training_data
-    - Place test CSV files into ~/example/test_data
-
+    We have provided example train_data.csv, test_data.csv and labels.csv on the above cloned example repo.
+    You may consider placing them or your own CSVs in those folders for testing and debuggig. 
+    - Place train_data.csv files into ~/example/training_data folder
+    - Place test_data.csv files into ~/example/test_data folder
+    - Place labels.csv files into ~/example/test_data folder
 3. Build the Docker Image:
     
     In the root of the repository, build the Docker image using the provided Dockerfile:
