@@ -8,7 +8,6 @@ This is the Phase 2 example submission. In this phase, we have made few improvem
 Overall major function arguments remains same, some new functionality have been added as follows.
 
 - **Enhanced Data Loading I/O:**  
-  - The `load_challenge_data` function now checks for the presence of key columns (e.g., `studyid_adm` and `inhospital_mortality`). If these columns are missing, they are set to `NA` and then dropped before processing.
   - The `load_challenge_testdata` function accepts an optional list of selected columns. This ensures that during inference, only the necessary columns are loaded from the CSV.
   - New helper functions have been added to read selected variables either from the model dictionary or from a file (e.g., `selected_features.txt`) in the model folder or root directory.
 
