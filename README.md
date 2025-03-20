@@ -33,12 +33,10 @@ submission/
 ├── team_code.py              # REQUIRED: Contains your training and inference functions.
 ├── helper_code.py            # Not required: Contains helper functions used by your code.
 ├── threshold.txt             # REQUIRED: Contains the probability threshold (e.g., 0.5), either get calculated during training or model run or hard coded.  
-├── selected_variables.txt     # OPTIONAL: Contains the raw selected variables used for training, if not given/calculated explicitely all features with be considered as used for parsimony.
-├── dummy_columns.txt         # OPTIONAL: Contains the dummy‐encoded column names (if not stored in model folder).
 └── model/
     ├── model.sav             # REQUIRED: Serialized trained model (includes imputer, prediction_model, etc.).
     ├── dummy_columns.txt     # OPTIONAL: List of dummy‐encoded columns (used to align test data).
-    └──selected_variables.txt  # OPTIONAL: A copy of selected_variables.txt (for reference).
+    └──selected_variables.txt  # OPTIONAL: Contains the raw selected variables used for training, if not given/calculated explicitely all features with be considered as used for parsimony.
 ```
 
 ## File Descriptions
