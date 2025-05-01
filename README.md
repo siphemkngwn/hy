@@ -32,9 +32,12 @@ submission/
 ├── run_model.py              # Not required: Script to run inference and evaluation.
 ├── team_code.py              # REQUIRED: Contains your training and inference functions.
 ├── helper_code.py            # Not required: Contains helper functions used by your code.
-├── threshold.txt             # REQUIRED: Contains the probability threshold (e.g., 0.5), either get calculated during training or model run or hard coded.  
+├── threshold.txt             # OPTIONAL: if present, used as classification threshold; otherwise threshold chosen to ensure sensitivity ≥ 0.8.
 ├── selected_variables.txt     # OPTIONAL: Contains the raw selected variables used for training, if not given/calculated explicitely all features with be considered as used for parsimony.
 ├── dummy_columns.txt         # OPTIONAL: Contains the dummy‐encoded column names (if not stored in model folder).
+├── scale_params.json # centers & scales for the four factor metrics + inference time.
+├── factor_loadings.json # numeric loadings for F1, AUPRC, Net.Benefit, ECE.
+├── zscore_params.json #  µ and σ for z-scoring the raw weighted score.
 └── model/
     ├── model.sav             # REQUIRED: Serialized trained model (includes imputer, prediction_model, etc.).
     ├── dummy_columns.txt     # OPTIONAL: List of dummy‐encoded columns (used to align test data).
@@ -142,9 +145,9 @@ Follow these steps to run the example code in a Docker environment:
     **Evaluate Your Model:**
     Finally, run the evaluation script to compute performance metrics (e.g., AUC, AUPRC, Sensitivity parsimony score, compute usage):
     ```bash
-    python evaluate_2024.py test_data/labels.csv test_outputs/outputs.txt test_outputs/inference_time.txt threshold.txt score.json
+    python evaluate_2024.py test_data/labels.csv test_outputs/outputs.txt test_outputs/inference_time.txt threshold.txt scale_params.json factor_loadings.json zscore_params.json score.json
     ```
-    The evaluation output will be saved in score.json.
+   The final score.json will include weighted_score and scaled_weighted_score only when sensitivity ≥ 0.8; otherwise they will be null.
     
     **Exit the Container:**
     Once finished, simply type:
