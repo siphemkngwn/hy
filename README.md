@@ -9,7 +9,7 @@ Overall major function arguments remains same, some new functionality have been 
 
 - **Enhanced Data Loading I/O:**  
   - The `load_challenge_testdata` function accepts an optional list of selected columns. This ensures that during inference, only the necessary columns are loaded from the CSV.
-  - New helper functions have been added to read selected variables either from the model dictionary or from a file (e.g., `selected_features.txt`) in the model folder or root directory.
+  - New helper functions have been added to read selected variables either from the model dictionary or from a file (e.g., `selected_variables.txt`) in the model folder or root directory.
 
 - **Threshold Handling Improvements:**  
   - A new mechanism is implemented to read the classification threshold from a file. If the file is missing or cannot be read, the system computes an approximate threshold from the prediction probabilities and binary predictions.
@@ -32,6 +32,7 @@ submission/
 ├── run_model.py              # Not required: Script to run inference and evaluation.
 ├── team_code.py              # REQUIRED: Contains your training and inference functions.
 ├── helper_code.py            # Not required: Contains helper functions used by your code.
+<<<<<<< HEAD
 ├── threshold.txt             # OPTIONAL: if present, used as classification threshold; otherwise threshold chosen to ensure sensitivity ≥ 0.8.
 ├── selected_variables.txt     # OPTIONAL: Contains the raw selected variables used for training, if not given/calculated explicitely all features with be considered as used for parsimony.
 ├── dummy_columns.txt         # OPTIONAL: Contains the dummy‐encoded column names (if not stored in model folder).
@@ -41,7 +42,7 @@ submission/
 └── model/
     ├── model.sav             # REQUIRED: Serialized trained model (includes imputer, prediction_model, etc.).
     ├── dummy_columns.txt     # OPTIONAL: List of dummy‐encoded columns (used to align test data).
-    └──selected_variables.txt  # OPTIONAL: A copy of selected_variables.txt (for reference).
+    └──selected_variables.txt  # OPTIONAL: Contains the raw selected variables used for training, if not given/calculated explicitely all features with be considered as used for parsimony.
 ```
 
 ## File Descriptions
@@ -74,7 +75,6 @@ submission/
   - **model.sav:** The serialized model including the imputer and prediction model.
   - **dummy_columns.txt:** Required file listing the dummy‑encoded columns used during training.
   - **selected_variables.txt:** (Optional) A copy of `selected_variables.txt` for reference.
-  - **total_features.txt:** (Optional) Contains the total number of raw features (e.g., 136) available, used to compute the parsimony score.
 
 ---
 ---
@@ -97,11 +97,11 @@ Follow these steps to run the example code in a Docker environment:
     git clone --branch Phase2 https://github.com/Kamaleswaran-Lab/The-2024-Pediatric-Sepsis-Challenge.git
     cd The-2024-Pediatric-Sepsis-Challenge
     ```
-    We have provided example train_data.csv and test_data.csv and labels.csv on the above cloned example repo.
-    You may consider placing them or your own csvs in those folders for testing and debuggig. 
-    - Place training CSV files into ~/example/training_data
-    - Place test CSV files into ~/example/test_data
-
+    We have provided example train_data.csv, test_data.csv and labels.csv on the above cloned example repo.
+    You may consider placing them or your own CSVs in those folders for testing and debuggig. 
+    - Place train_data.csv files into ~/example/training_data folder
+    - Place test_data.csv files into ~/example/test_data folder
+    - Place labels.csv files into ~/example/test_data folder
 3. Build the Docker Image:
     
     In the root of the repository, build the Docker image using the provided Dockerfile:
