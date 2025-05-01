@@ -20,6 +20,28 @@ Overall major function arguments remains same, some new functionality have been 
 - **Compute Calculation:**  
   - We now track and report compute resource usage—including memory usage and CPU time—using `psutil`. This data is recorded during inference and included in the evaluation metrics.
 
+## Scoring Criteria
+
+1. **Sensitivity Guard**  
+   - Your model’s **sensitivity must be ≥ 0.8** at the chosen classification threshold.  
+   - If sensitivity < 0.8, we **do not compute** a weighted score; both `weighted_score` and `scaled_weighted_score` will be **null** in the JSON output and the submission will not appear on the leaderboard.
+
+2. **Threshold Selection**  
+   - You may supply your own threshold via `threshold.txt` ensuring a sensitivity ≥ 0.8 (if possible).   
+
+3. **Weighted Scoring via Factor Loadings**  
+   - The four performance metrics—`F1`, `AUPRC`, `Net.Benefit`, and `ECE`—are standardized (using `scale_params.json`) and then combined using the factor‐analysis loadings in `factor_loadings.json`. 
+   - Parsimony (inverted: 1 − score) and inference-time (inverted z-normalized “speed”) each contribute a fixed 5 % weight.
+
+4. **Final Z-Score Transform**  
+   - The raw weighted score is transformed via a z-score using μ and σ in `zscore_params.json`. 
+   - Both `weighted_score` and `scaled_weighted_score` are rounded to **4 decimal places**.
+
+5. **Leaderboard Ranking**  
+   - Submissions that satisfy sensitivity ≥ 0.8 will be ranked by their `scaled_weighted_score` (higher is better).  
+   - Submissions with sensitivity < 0.8 will receive null scores and will not be ranked.  
+
+
 ---
 
 
@@ -32,7 +54,6 @@ submission/
 ├── run_model.py              # Not required: Script to run inference and evaluation.
 ├── team_code.py              # REQUIRED: Contains your training and inference functions.
 ├── helper_code.py            # Not required: Contains helper functions used by your code.
-<<<<<<< HEAD
 ├── threshold.txt             # OPTIONAL: if present, used as classification threshold; otherwise threshold chosen to ensure sensitivity ≥ 0.8.
 ├── selected_variables.txt     # OPTIONAL: Contains the raw selected variables used for training, if not given/calculated explicitely all features with be considered as used for parsimony.
 ├── dummy_columns.txt         # OPTIONAL: Contains the dummy‐encoded column names (if not stored in model folder).
