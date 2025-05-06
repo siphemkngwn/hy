@@ -15,6 +15,8 @@ import pandas as pd
 import mne
 from sklearn.impute import SimpleImputer
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import  roc_curve
+from sklearn.model_selection import train_test_split
 import joblib
 
 ################################################################################
@@ -63,22 +65,44 @@ def train_challenge_model(data_folder, model_folder, verbose):
     with open(os.path.join(model_folder, 'dummy_columns.txt'), 'w') as f:
         f.write("\n".join(dummy_columns))
         
-        
-    # Define parameters for random forest classifier and regressor.
-    n_estimators   = 123  # Number of trees in the forest.
-    max_leaf_nodes = 456  # Maximum number of leaf nodes in each tree.
-    random_state   = 789  # Random state; set for reproducibility.
+    # Split off a validation fold for threshold optimization
+    X_train_d, X_val_d, y_train, y_val = train_test_split(
+        data, label, test_size=0.2, stratify=label, random_state=42
+    )
+    if verbose >= 2:
+        print(f"Train/val split: {len(y_train)} train, {len(y_val)} val.")
 
-    # Impute any missing features; use the mean value by default.
-    imputer = SimpleImputer().fit(data)
+    # Fit imputer on training fold
+    imputer = SimpleImputer().fit(X_train_d)
+    X_train_imp = imputer.transform(X_train_d)
+    X_val_imp = imputer.transform(X_val_d)
 
-    # Train the models.
-    data_imputed = imputer.transform(data)
+    # Train classifier on training fold
+    rf = RandomForestClassifier(
+        n_estimators=123,
+        max_leaf_nodes=456,
+        random_state=789
+    ).fit(X_train_imp, y_train.ravel())
+
+    # Optimize threshold on validation fold
+    val_probs = rf.predict_proba(X_val_imp)[:, 1]
+    threshold = find_threshold_for_sensitivity(y_val, val_probs, min_sens=0.8)
+    with open(os.path.join(model_folder, 'threshold.txt'), 'w') as f:
+        f.write(str(threshold))
+    if verbose >= 1:
+        print(f"Optimized threshold (min_sens=0.8): {threshold:.3f}")
+
+    # 9. Retrain imputer & model on full data
+    imputer_full = SimpleImputer().fit(data)
+    X_full_imp = imputer_full.transform(data)
     prediction_model = RandomForestClassifier(
-        n_estimators=n_estimators, max_leaf_nodes=max_leaf_nodes, random_state=random_state).fit(data_imputed, label.ravel())
+        n_estimators=123,
+        max_leaf_nodes=456,
+        random_state=789
+    ).fit(X_full_imp, label.ravel())
 
     # Save the models.
-    save_challenge_model(model_folder, imputer, prediction_model, selected_variables, dummy_columns)
+    save_challenge_model(model_folder, imputer, prediction_model, selected_variables, dummy_columns, threshold)
 
     if verbose >= 1:
         print('Done!')
@@ -115,13 +139,20 @@ def load_challenge_model(model_folder, verbose):
     model['columns'] = dummy_columns
     return model
 
+def find_threshold_for_sensitivity(y, p, thr=None, min_sens=0.8):
+    if thr is not None:
+        return thr
+    fpr,tpr,ths=roc_curve(y,p)
+    valid=ths[tpr>=min_sens]
+    return float(valid.max()) if len(valid)>0 else 0.5
 
 def run_challenge_model(model, data_folder, verbose):
     imputer = model['imputer']
     prediction_model = model['prediction_model']
     dummy_columns = model['dummy_columns']
     selected_variable = model['selected_variables']
-    
+    threshold = model.get('threshold', 0.5)
+
     
     # Load test data. If selected_variables is None, all columns are loaded.
     patient_ids, data, _ = load_challenge_testdata(data_folder, selected_variable)
@@ -136,13 +167,13 @@ def run_challenge_model(model, data_folder, verbose):
     # Get prediction probabilities.
     prediction_probability = prediction_model.predict_proba(data_imputed)[:, 1]
     
-    # Set a probability threshold (adjust or calculate as needed).
-    threshold = 0.08
-    
+    # want to use any other threshold, you may provide it here
+    # threshold = 0.5
+
     # Compute binary predictions using the threshold.
     prediction_binary = (prediction_probability >= threshold).astype(int)
     
-    # Write the threshold to a file called "threshold.txt".
+    # Write the threshold to a file called "threshold.txt" ignore if already wrote it during training.
     with open("threshold.txt", "w") as f:
         f.write(str(threshold))
     
@@ -155,12 +186,13 @@ def run_challenge_model(model, data_folder, verbose):
 ################################################################################
 
 # Save your trained model along with the imputer, selected features, and dummy columns.
-def save_challenge_model(model_folder, imputer, prediction_model, selected_variables, dummy_columns):
+def save_challenge_model(model_folder, imputer, prediction_model, selected_variables, dummy_columns, threshold):
     d = {
         'imputer': imputer,
         'prediction_model': prediction_model,
         'selected_features': selected_variables,
         'dummy_columns': dummy_columns,
+        'threshold': threshold
     }
     filename = os.path.join(model_folder, 'model.sav')
     joblib.dump(d, filename, protocol=0)
