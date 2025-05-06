@@ -27,7 +27,7 @@ Overall major function arguments remains same, some new functionality have been 
    - If sensitivity < 0.8, we **do not compute** a weighted score; both `weighted_score` and `scaled_weighted_score` will be **null** in the JSON output and the submission will not appear on the leaderboard.
 
 2. **Threshold Selection**  
-   - You may supply your own threshold via `threshold.txt` ensuring a sensitivity ≥ 0.8 (if possible).   
+   - We have added an example code to calculate the threshold ensuring a sensitivity  ≥ 0.8 during training, you  may also supply your own threshold via `threshold.txt` using your run model function, ensuring a sensitivity ≥ 0. 8.   
 
 3. **Weighted Scoring via Factor Loadings**  
    - The four performance metrics—`F1`, `AUPRC`, `Net.Benefit`, and `ECE`—are standardized (using `scale_params.json`) and then combined using the factor‐analysis loadings in `factor_loadings.json`. 
@@ -54,7 +54,7 @@ submission/
 ├── run_model.py              # Not required: Script to run inference and evaluation.
 ├── team_code.py              # REQUIRED: Contains your training and inference functions.
 ├── helper_code.py            # Not required: Contains helper functions used by your code.
-├── threshold.txt             # OPTIONAL: if present, used as classification threshold; otherwise threshold chosen to ensure sensitivity ≥ 0.8.
+├── threshold.txt             # REQUIRED: Used as classification threshold.
 ├── selected_variables.txt     # OPTIONAL: Contains the raw selected variables used for training, if not given/calculated explicitely all features with be considered as used for parsimony.
 ├── dummy_columns.txt         # OPTIONAL: Contains the dummy‐encoded column names (if not stored in model folder).
 ├── scale_params.json # centers & scales for the four factor metrics + inference time.
