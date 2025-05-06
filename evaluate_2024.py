@@ -19,13 +19,6 @@ def calculate_ece(probs, labels, n_bins=10):
             ece+= m.sum()*abs(labels[m].mean()-probs[m].mean())/len(probs)
     return ece
 
-def find_threshold_for_sensitivity(y, p, thr=None, min_sens=0.8):
-    if thr is not None:
-        return thr
-    fpr,tpr,ths=roc_curve(y,p)
-    valid=ths[tpr>=min_sens]
-    return float(valid.max()) if len(valid)>0 else 0.5
-
 def read_inference_and_parsimony(fn):
     inf,par=None,None
     for L in open(fn):
@@ -48,15 +41,13 @@ def evaluate_model(
     _,_,y_true,_ = load_challenge_data(label_folder)
     ids,y_prob,_= load_challenge_predictions(output_folder)
 
-    # 2. threshold (user-supplied or ensure sens≥0.8)
-    thr = None
-    if threshold_file:
-        try:
-            thr = float(open(threshold_file).read().strip())
-        except:
-            thr = None
-    thr = find_threshold_for_sensitivity(y_true,y_prob,thr,min_sens=0.8)
-    y_pred=(y_prob>=thr).astype(int)
+    # 2. threshold (must come from threshold.txt, default to 0.5 if missing/unreadable)
+    try:
+        thr = float(open(threshold_file).read().strip()) if threshold_file else 0.5
+    except Exception as e:
+        print(f"Warning: could not read threshold_file '{threshold_file}', using default 0.5. Error: {e}")
+        thr = 0.5
+    y_pred = (y_prob >= thr).astype(int)
 
     # 3. compute metrics
     tn,fp,fn,tp=confusion_matrix(y_true,y_pred).ravel()
@@ -128,7 +119,7 @@ if __name__=="__main__":
     p=argparse.ArgumentParser()
     p.add_argument("label_folder");p.add_argument("output_folder")
     p.add_argument("inference_time_file")
-    p.add_argument("threshold_file",nargs="?",default=None)
+    p.add_argument("threshold_file", type=str, help="Threshold file for classification (required)")
     p.add_argument("scale_params_json")
     p.add_argument("factor_loadings_json")
     p.add_argument("zscore_params_json")
