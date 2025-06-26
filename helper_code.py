@@ -184,8 +184,11 @@ def read_selected_variables(model, model_folder):
       - list or None: A list of selected variable names if available; otherwise, None.
     """
     # Try to get from the model dictionary.
-    if model is not None and "selected_variables" in model:
-        return model["selected_variables"]
+    try:
+        if model is not None and "selected_variables" in model:
+            return model["selected_variables"]
+    except TypeError:
+        print("Warning: Model does not have 'selected_variables' key. Attempting to read from file.")
     
     # Otherwise, try to read from the file.
     file_path = os.path.join(model_folder, 'selected_variables.txt')
